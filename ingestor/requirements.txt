@@ -1,0 +1,5 @@
+asyncpg>=0.24.0
+paho-mqtt>=2.0.0
+pydantic>=2.0.0
+aiomqtt>=0.1.0
+pydantic_settings>=2.0.0

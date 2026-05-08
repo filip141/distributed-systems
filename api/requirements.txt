@@ -1,2 +1,4 @@
-flask
+django
+djangorestframework
 psycopg2-binary
+django-filter

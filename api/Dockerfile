@@ -16,11 +16,11 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Skopiuj pliki kodu aplikacji.
-COPY *.py .
+COPY . .
 
 # Utwórz użytkownika niebędącego administratorem ze względów bezpieczeństwa i przejdź do niego
 RUN useradd -m appuser && chown -R appuser /app
 USER appuser
 
 # Uruchom aplikację
-CMD ["python", "app.py"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:5001"]

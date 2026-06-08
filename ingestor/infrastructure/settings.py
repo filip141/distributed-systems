@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     mqtt_host: str = "broker"
-    mqtt_port: int = 1883
+    mqtt_port: int = 8883
     mqtt_topic: str = "lab/+/+/+"
 
     db_host: str = "postgres"

@@ -1,8 +1,8 @@
 type Props = {
   view: "table" | "charts"
-  sensor: "all" | "temperature" | "preassure"
+  sensor: "all" | "temperature" | "pressure"
   onViewChange: (v: "table" | "charts") => void
-  onSensorChange: (v: "all" | "temperature" | "preassure") => void
+  onSensorChange: (v: "all" | "temperature" | "pressure") => void
 }
 
 export function FilterPanel({
@@ -41,7 +41,7 @@ export function FilterPanel({
 
       {/* SENSOR */}
       <div className="flex gap-2 flex-wrap">
-        {["all", "temperature", "preassure"].map((s) => (
+        {["all", "temperature", "pressure"].map((s) => (
           <button
             key={s}
             onClick={() => onSensorChange(s as any)}

@@ -20,7 +20,7 @@ export function MeasurementsCharts({
   )
 
   const pressure = data.filter(
-    (m) => m.sensor === "preassure"
+    (m) => m.sensor === "pressure"
   )
 
   return (

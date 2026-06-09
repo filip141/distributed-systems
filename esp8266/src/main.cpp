@@ -16,7 +16,16 @@ String deviceId;
 String topicTemperature;
 String topicPressure;
 
-// -------------------- DEVICE ID --------------------
+/**
+ * @brief Generates unique device ID based on ESP8266 MAC address.
+ *
+ * Device ID has format:
+ * esp8266-XXYYZZAABBCC
+ *
+ * Used as MQTT client ID and topic namespace.
+ *
+ * @return String unique device identifier
+ */
 String generateDeviceIdFromEfuse() {
   uint8_t mac[6];
   WiFi.macAddress(mac);
@@ -30,7 +39,14 @@ String generateDeviceIdFromEfuse() {
   return String(id);
 }
 
-// -------------------- WIFI --------------------
+/**
+ * @brief Connects ESP8266 to WiFi network.
+ *
+ * Configures station mode, disables sleep for stability,
+ * and attempts connection using credentials from secrets.h.
+ *
+ * Blocks until connected or timeout is reached.
+ */
 void connectWiFi() {
   WiFi.mode(WIFI_STA);
   WiFi.setSleepMode(WIFI_NONE_SLEEP);
@@ -58,7 +74,14 @@ void connectWiFi() {
   }
 }
 
-// -------------------- MQTT --------------------
+/**
+ * @brief Establishes MQTT connection to broker using TLS.
+ *
+ * Uses deviceId as MQTT client identifier.
+ * Reconnects automatically if connection fails.
+ *
+ * Requires active WiFi connection.
+ */
 void connectMQTT() {
   mqttClient.setServer(MQTT_HOST, MQTT_PORT);
   mqttClient.setBufferSize(512);
@@ -79,14 +102,34 @@ void connectMQTT() {
   }
 }
 
-// -------------------- TIME --------------------
+/**
+ * @brief Returns current timestamp in milliseconds.
+ *
+ * Uses system time synchronized via NTP.
+ *
+ * @return Unix timestamp in milliseconds
+ */
 long long getTimestampMs() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   return ((long long)tv.tv_sec * 1000LL) + (tv.tv_usec / 1000);
 }
 
-// -------------------- PUBLISH --------------------
+/**
+ * @brief Publishes temperature measurement to MQTT broker.
+ *
+ * Payload format (JSON):
+ * {
+ *   device_id,
+ *   sensor: "temperature",
+ *   value,
+ *   unit,
+ *   ts_ms
+ * }
+ *
+ * Topic:
+ * lab/{group}/{device_id}/temperature
+ */
 void publishMeasurement() {
   StaticJsonDocument<256> doc;
 
@@ -102,6 +145,14 @@ void publishMeasurement() {
   mqttClient.publish(topicTemperature.c_str(), payload);
 }
 
+/**
+ * @brief Publishes pressure measurement to MQTT broker.
+ *
+ * Uses sine wave simulation as fake sensor data.
+ *
+ * Topic:
+ * lab/{group}/{device_id}/pressure
+ */
 void publishPressure() {
   StaticJsonDocument<256> doc;
 
@@ -117,7 +168,17 @@ void publishPressure() {
   mqttClient.publish(topicPressure.c_str(), payload);
 }
 
-// -------------------- SETUP --------------------
+/**
+ * @brief Initializes system: WiFi, time sync, TLS setup, MQTT identifiers.
+ *
+ * Steps:
+ * - initializes Serial
+ * - generates device ID
+ * - builds MQTT topics
+ * - connects WiFi
+ * - synchronizes time via NTP (required for TLS)
+ * - configures TLS trust anchors
+ */
 void setup() {
   Serial.begin(115200);
   delay(1000);
@@ -130,8 +191,6 @@ void setup() {
   Serial.println(deviceId);
 
   connectWiFi();
-
-  // NTP REQUIRED FOR TLS VALIDATION
   configTime(0, 0, "pool.ntp.org", "time.nist.gov");
 
   struct tm timeinfo;
@@ -152,7 +211,15 @@ void setup() {
   delay(500);
 }
 
-// -------------------- LOOP --------------------
+/**
+ * @brief Main loop handling connectivity and periodic publishing.
+ *
+ * Responsibilities:
+ * - maintain WiFi connection
+ * - maintain MQTT connection
+ * - process MQTT client loop
+ * - publish sensor data every 5 seconds
+ */
 void loop() {
   if (WiFi.status() != WL_CONNECTED) {
     connectWiFi();

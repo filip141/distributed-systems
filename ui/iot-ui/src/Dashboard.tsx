@@ -13,7 +13,7 @@ export default function Dashboard() {
   const [latest, setLatest] = useState<Measurement | null>(null)
 
   const [view, setView] = useState<"table" | "charts">("table")
-  const [sensor, setSensor] = useState<"all" | "temperature" | "preassure">("all")
+  const [sensor, setSensor] = useState<"all" | "temperature" | "pressure">("all")
 
   useEffect(() => {
     getMeasurements().then(setData)

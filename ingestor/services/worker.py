@@ -1,9 +1,15 @@
 import asyncio
+from domain.models import Measurement
+from infrastructure.db import MeasurementDatabase
 
 
 class BatchWorker:
 
-    def __init__(self, queue, repository, batch_size):
+    def __init__(self, 
+                 queue: asyncio.Queue[Measurement], 
+                 repository: MeasurementDatabase, 
+                 batch_size: int
+                 ):
         self.queue = queue
         self.repository = repository
         self.batch_size = batch_size

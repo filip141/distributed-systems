@@ -1,6 +1,18 @@
-from pydantic_settings import BaseSettings
+"""
+Application configuration using Pydantic settings.
+
+Provides centralized configuration for:
+- MQTT connection
+- database connection
+- batch processing parameters
+"""
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
+    """
+    Environment-based configuration class.
+    """
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     mqtt_host: str = "broker"
     mqtt_port: int = 8883
     mqtt_topic: str = "lab/+/+/+"

@@ -8,7 +8,7 @@ import { MeasurementsCharts } from "./components/MeasurementsCharts"
 import { FilterPanel } from "./components/FilterPanel"
 import { LatestMeasurement } from "./components/LatestMeasurement"
 
-export default function Dashboard() {
+export default function Dashboard({ onLogout }: { onLogout: () => void }) {
   const [data, setData] = useState<Measurement[]>([])
   const [latest, setLatest] = useState<Measurement | null>(null)
 
@@ -29,8 +29,22 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-4">IoT Dashboard</h1>
+      
+      {/* 🔥 TOP BAR (DODANE) */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">
+          IoT Dashboard
+        </h1>
 
+        <button
+          onClick={onLogout}
+          className="bg-fuchsia-600 hover:bg-fuchsia-700 text-white px-4 py-2 rounded-lg transition"
+        >
+          Logout
+        </button>
+      </div>
+
+      {/* Latest measurement */}
       <LatestMeasurement data={latest} />
 
       <div className="mt-4">

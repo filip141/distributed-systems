@@ -1,0 +1,79 @@
+# =========================
+# ENV / SECRETS
+# =========================
+.env
+.env.*
+**/.env
+**/.env.*
+
+# =========================
+# PYTHON (DJANGO / BACKEND)
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+*.sqlite3
+*.log
+
+# virtualenv
+ds-env/
+venv/
+.venv/
+env/
+
+# Django stuff
+*.pot
+*.py[cod]
+
+# =========================
+# NODE (FRONTEND - React)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# build outputs
+dist/
+build/
+.vite/
+
+# frontend specific (Twój projekt)
+ui/iot-ui/node_modules/
+ui/iot-ui/dist/
+ui/iot-ui/build/
+ui/iot-ui/.vite/
+
+# =========================
+# DOCKER / SYSTEM
+# =========================
+*.log
+docker-compose.override.yml
+
+# =========================
+# OS FILES
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# TEST / CACHE
+# =========================
+.coverage
+.pytest_cache/
+.mypy_cache/
+
+# =========================
+# MQTT / LOCAL DEV ARTIFACTS
+# =========================
+*.pid
+*.sock

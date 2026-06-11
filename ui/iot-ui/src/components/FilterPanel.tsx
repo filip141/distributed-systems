@@ -12,16 +12,17 @@ export function FilterPanel({
   onSensorChange,
 }: Props) {
   return (
-    <div className="bg-white rounded-xl shadow p-4 flex flex-col gap-4">
+    <div className="p-3 rounded-4 bg-dark bg-opacity-25">
 
-      {/* VIEW */}
-      <div className="flex gap-2">
+      {/* VIEW SWITCH (TA SAMA WYSOKOŚĆ + SZEROKOŚĆ CO DOŁ) */}
+      <div className="d-flex flex-wrap gap-3 justify-content-center mb-3">
+
         <button
           onClick={() => onViewChange("table")}
-          className={`px-5 py-2 rounded-lg font-medium ${
+          className={`btn rounded-pill sensor-big ${
             view === "table"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100"
+              ? "btn-danger"
+              : "btn-outline-light"
           }`}
         >
           📋 Table
@@ -29,32 +30,40 @@ export function FilterPanel({
 
         <button
           onClick={() => onViewChange("charts")}
-          className={`px-5 py-2 rounded-lg font-medium ${
+          className={`btn rounded-pill sensor-big ${
             view === "charts"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-100"
+              ? "btn-danger"
+              : "btn-outline-light"
           }`}
         >
           📈 Charts
         </button>
+
       </div>
 
-      {/* SENSOR */}
-      <div className="flex gap-2 flex-wrap">
-        {["all", "temperature", "pressure"].map((s) => (
+      {/* SENSOR FILTERS (bez zmian wizualnych) */}
+      <div className="d-flex flex-wrap gap-3 justify-content-center">
+
+        {[
+          { key: "all", label: "All" },
+          { key: "temperature", label: "Temperature" },
+          { key: "pressure", label: "Pressure" },
+        ].map((item) => (
           <button
-            key={s}
-            onClick={() => onSensorChange(s as any)}
-            className={`px-4 py-1 rounded-full text-sm font-medium ${
-              sensor === s
-                ? "bg-black text-white"
-                : "bg-gray-100"
+            key={item.key}
+            onClick={() => onSensorChange(item.key as any)}
+            className={`btn rounded-pill sensor-big ${
+              sensor === item.key
+                ? "btn-danger text-white"
+                : "btn-outline-light"
             }`}
           >
-            {s}
+            {item.label}
           </button>
         ))}
+
       </div>
+
     </div>
   )
 }

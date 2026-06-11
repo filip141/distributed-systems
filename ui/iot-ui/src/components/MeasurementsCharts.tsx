@@ -26,7 +26,7 @@ export function MeasurementsCharts({
   return (
     <div className="space-y-10">
 
-      {/* TEMPERATURE */}
+      {temperature.length > 0 && (
       <div className="bg-white rounded-xl shadow p-4">
         <h3 className="mb-3 font-semibold">
           Temperature
@@ -58,8 +58,9 @@ export function MeasurementsCharts({
           </ResponsiveContainer>
         </div>
       </div>
+      )}
 
-      {/* PRESSURE */}
+      {pressure.length > 0 && (
       <div className="bg-white rounded-xl shadow p-4">
         <h3 className="mb-3 font-semibold">
           Pressure
@@ -90,6 +91,7 @@ export function MeasurementsCharts({
           </ResponsiveContainer>
         </div>
       </div>
+      )}
 
     </div>
   )

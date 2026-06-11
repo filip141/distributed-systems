@@ -34,3 +34,15 @@ services:
       - broker
       - database
     container_name: ingestor
+
+  frontend:
+    build:
+      context: ./ui/iot-ui
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    container_name: iot-ui
+    depends_on:
+      - django
+    environment:
+      - CHOKIDAR_USEPOLLING=true

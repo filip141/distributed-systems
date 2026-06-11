@@ -25,6 +25,92 @@
  | /measurements/history/ | GET | Filtered measurement history |
 
  ---
+ 
+ ## 2a. Authentication
+ 
+ The API is protected using **JWT (JSON Web Token)** authentication via Django REST Framework SimpleJWT.
+ 
+ ### 🔑 Login endpoint
+ 
+ ```
+ POST /api/token/
+ ```
+ 
+ **Description:**
+ Returns access and refresh tokens for authenticated users.
+ 
+ **Request body:**
+ 
+ ```json
+ {
+   "username": "admin",
+   "password": "admin123"
+ }
+ ```
+ 
+ **Response:**
+ 
+ ```json
+ {
+   "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
+   "access": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
+ }
+ ```
+ 
+ ---
+ 
+ ### 🔄 Refresh token
+ 
+ ```
+ POST /api/token/refresh/
+ ```
+ 
+ **Description:**
+ Generates a new access token using refresh token.
+ 
+ **Request body:**
+ 
+ ```json
+ {
+   "refresh": "your_refresh_token"
+ }
+ ```
+ 
+ **Response:**
+ 
+ ```json
+ {
+   "access": "new_access_token"
+ }
+ ```
+ 
+ ---
+ 
+ ### 🛡️ Authorization header
+ 
+ For all protected endpoints, include JWT token in request headers:
+ 
+ ```
+ Authorization: Bearer <access_token>
+ ```
+ 
+ **Example:**
+ 
+ ```
+ GET /api/measurements/
+ Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+ ```
+ 
+ ---
+ 
+ ### 🔒 Security notes
+ 
+ - Tokens expire after a limited time (configurable in settings)
+ - Access token should be stored client-side (e.g. localStorage)
+ - Refresh token should be used to maintain session
+ - Unauthorized requests return `401 Unauthorized`
+ 
+ ---
 
  ## 3. Health Check
 

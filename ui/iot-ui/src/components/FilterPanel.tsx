@@ -13,10 +13,7 @@ export function FilterPanel({
 }: Props) {
   return (
     <div className="p-3 rounded-4 bg-dark bg-opacity-25">
-
-      {/* VIEW SWITCH (TA SAMA WYSOKOŚĆ + SZEROKOŚĆ CO DOŁ) */}
       <div className="d-flex flex-wrap gap-3 justify-content-center mb-3">
-
         <button
           onClick={() => onViewChange("table")}
           className={`btn rounded-pill sensor-big ${
@@ -40,8 +37,6 @@ export function FilterPanel({
         </button>
 
       </div>
-
-      {/* SENSOR FILTERS (bez zmian wizualnych) */}
       <div className="d-flex flex-wrap gap-3 justify-content-center">
 
         {[
